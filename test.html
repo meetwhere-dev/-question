@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" name="" id="primeNumbers">
+        <div id="primeNumbersLists"></div>
+    </div>
+
+
+    <script>
+        // 数据同步
+        var allData = {};
+        // input双向数据绑定
+        function model(el, name, ...otherEl){
+            // el: 要绑定的input元素
+            // name: 绑定的数据名称
+            // otherEl： 其他需要实时更新的元素
+            
+            document.getElementById(el).addEventListener('input', function () {
+                otherEl.forEach(element => {
+                    document.getElementById(element).innerHTML = allData[name];
+                });
+            })
+            Object.defineProperty(allData,name,{
+                get(){
+                    return document.getElementById(el).value},
+                set(d){
+                    document.getElementById(el).value = d;
+                    console.log(d)
+                },
+                enumerable: true,
+                configurable: true
+            })
+        }
+        model("primeNumbers", 'primeNumbers', 'primeNumbersLists')
+
+        // 求小于一个整数的所有素数 
+        // function primeNumber(num){
+        //     let result = new Set();
+        //     for (let i = 2; i < num; i++){
+        //         let isPrimeNumber = true;
+        //         let k = Math.sqrt(i);
+        //         for(let j = 2; j <= k; j++){
+        //             if(i % j === 0){
+        //                 isPrimeNumber = false
+        //                 break
+        //             }
+        //         }
+        //         if(isPrimeNumber && i != 4){
+        //             console.log(i)
+        //             result.add(i)
+        //         }
+        //     }
+        //     return result
+        // }
+        // console.log('100以下的素数', primeNumber(100))
+
+
+
+
+        let data = [{
+                id:0005,
+                title:'title5',
+                racting:5
+            }, {
+                id: 0003,
+                title: 'title3',
+                racting: 3
+            }, {
+                id: 0002,
+                title: 'title2',
+                racting: 2
+            }, {
+                id: 0004,
+                title: 'title4',
+                racting: 4
+            }, {
+                id: 0001,
+                title: 'title1',
+                racting: 1
+            }]
+        // 1根据racting排序 并输出
+            // data.sort(function(a, b){
+            //     return a.racting - b.racting
+            // })
+            // console.log(data)
+            // data.forEach(e => console.log(e))
+
+        // 2查找出id为x的值 并输出
+            // for (item of data){
+            //     if(item.racting === 5){
+            //         console.log('ID为5的对象:',{
+            //             id:item.id
+            //             title: item.title
+            //         })
+            //     }
+            // }
+
+        // 自己写一个array.map()函数
+        let fn = data.map(e => {return e.racting})
+        console.log('map:',fn)
+
+
+        Array.prototype.mymap = function (foo){
+            let result = [];
+            for(item of this){
+                result.push(foo(item))
+            }
+            return result
+        }
+        let fn2 = data.mymap(e => { return e.racting })
+        console.log('mymap:',fn2)
+
+
+            // 求向量之间夹角
+        function angle(vectorA, vectorB){
+            let va = Math.atan2(vectorA.y, vectorA.x)
+            let vb = Math.atan2(vectorB.y, vectorB.x)
+            let ang = Math.abs(va - vb) * 180 / Math.PI
+            if (ang >180){
+                ang = 360 - ang
+            }
+            return ang
+        }
+        let r = {x: 0, y: 2}
+        let t = {x: 23, y: 0}
+        console.log("向量r与向量t之间夹角度数为",angle(r,t))
+
+
+            // 求点是否在多边形中
+
+            // 防抖与节流
+        
+
+
+    </script>
+</body>
+</html>
